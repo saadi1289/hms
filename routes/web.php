@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\Doctor\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +48,9 @@ Route::controller(DashboardController::class)->middleware(Authenticate::class)->
     Route::get('/admin/dashboard', 'index')->name('admin.dashboard');
 });
 
-
+Route::controller(DoctorController::class)->middleware(Authenticate::class)->group(function () {
+    Route::get('/', 'index')->name('admin.doctor');
+    Route::get('admin.doctor.create', 'create')->name('admin.doctor.create');
+    Route::post('admin.doctor.create', 'store');
+});
 

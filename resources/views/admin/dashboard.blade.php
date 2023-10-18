@@ -6,10 +6,7 @@
 
             <div class="row">
                 <div class="col-6">
-                    <h2>Contacts</h2>
-                </div>
-                <div class="col-6 text-end">
-                    <a href="" class="btn btn-outline-primary">Add Contact</a>
+                    <h2>Dashboard</h2>
                 </div>
             </div>
 

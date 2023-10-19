@@ -18,30 +18,46 @@
                     <div class="card">
                         <div class="card-body">
                             @include('partials.alerts')
-                            {{-- @if (count($contacts) > 0) --}}
+                            @if (count($doctors) > 0 )
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr. No.</th>
                                             <th>Name</th>
-                                            <th>Email</th>
                                             <th>Status</th>
                                             <th>Specialization</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        @foreach ($doctors as $doctor)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $doctor->user->name }}</td>
 
-
+                                                <td>{{ $doctor->status }}</td>
+                                                <td>{{ $doctor->specialization }}</td>
+                                                <td>
+                                                    {{-- <a href="{{ route('contact.edit', $contact) }}" class="btn btn-primary">Edit</a> --}}
+                                                    <a href="{{ route('admin.doctor.show', $doctor) }}" class="btn btn-primary">Show</a>
+                                                    <form action="{{ route('admin.doctor.destroy' , $doctor) }}" method="post" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
-
                                 {{-- <div class="row justify-content-end">
                                     <div class="col-auto">
-                                        {{ $contacts->links('vendor.pagination.bootstrap-5') }}
+                                        {{ $doctor->links('vendor.pagination.bootstrap-5') }}
                                     </div>
                                 </div> --}}
-                            {{-- @else --}}
+                            @else
                                 <div class="alert alert-info">No record found</div>
-                            {{-- @endif --}}
+                            @endif
                         </div>
                     </div>
                 </div>

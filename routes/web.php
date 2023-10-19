@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\Doctor\DoctorController;
@@ -49,8 +49,12 @@ Route::controller(DashboardController::class)->middleware(Authenticate::class)->
 });
 
 Route::controller(DoctorController::class)->middleware(Authenticate::class)->group(function () {
-    Route::get('/', 'index')->name('admin.doctor');
-    Route::get('admin.doctor.create', 'create')->name('admin.doctor.create');
-    Route::post('admin.doctor.create', 'store');
+    Route::get('admin/doctors', 'index')->name('admin.doctor');
+    Route::get('admin/doctor/create', 'create')->name('admin.doctor.create');
+    Route::patch('admin/doctor/create', 'store');
+    Route::get('admin/doctor/{doctor}/show', 'show')->name('admin.doctor.show');
+    Route::get('admim/doctor/{doctor}/edit' , 'edit')->name('admin.doctor.edit');
+    Route::patch('admim/doctor/{doctor}/edit' , 'update');
+    Route::delete('admin/doctor/{doctor}/destroy', 'destroy')->name('admin.doctor.destroy');
 });
 

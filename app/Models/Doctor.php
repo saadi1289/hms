@@ -15,4 +15,8 @@ class Doctor extends Model
         'experience',
         'status',
     ];
+
+    public function user () {
+        return $this->belongsTo(User::class);
+    }
 }

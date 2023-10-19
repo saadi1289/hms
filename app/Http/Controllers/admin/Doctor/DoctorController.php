@@ -15,7 +15,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-       return view('admin.doctors.index');
+        return view('admin.doctors.index', [
+            'doctors' => Doctor::with('user')->get(),
+        ]);
     }
 
     /**
@@ -24,9 +26,8 @@ class DoctorController extends Controller
     public function create()
     {
         return view('admin.doctors.create', [
-             'doctors' => Doctor::all(),
+            'doctors' => Doctor::all(),
         ]);
-
     }
 
     /**
@@ -35,53 +36,57 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>['required'],
-            'email'=>['required', 'email', 'unique:users,email'],
-            'passsword'=>['required', 'confirmed'],
-            'picture'=>['required'],
-            'specialization'=>['required'],
-            'phone_number'=>['required'],
-            'experience'=>['required'],
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed'],
+            'specialization' => ['required'],
+            'phone_number' => ['required', 'unique:doctors,phone_number'],
+            'experience' => ['required'],
         ]);
-        $data =[
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'type' => 'Doctor',
+            'password' => Hash::make($request->password),
         ];
         $is_created = User::create($data);
         if ($is_created) {
             $id = $is_created->id;
             $data = [
-                'user_id'=>$id,
-                'specialization'=>$request->specialization,
-                'phone_number'=>$request->phone_number,
-                'experience'=>$request->experience,
+                'user_id' => $id,
+                'specialization' => $request->specialization,
+                'phone_number' => $request->phone_number,
+                'experience' => $request->experience,
             ];
             $is_created = Doctor::create($data);
             if ($is_created) {
-                return back()->with(['success' =>'Data successfully created!']);
-            } else{
-                return back()->with(['failure' =>'Failed to create!']);
+                return back()->with(['success' => 'Data successfully created!']);
+            } else {
+                return back()->with(['failure' => 'Failed to create!']);
             }
-        } else{
-            return back()->with(['failure' =>'Failed to create!']);
+        } else {
+            return back()->with(['failure' => 'Failed to create!']);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Doctor $doctor)
     {
-        //
-    }
+        return  view('admin.doctors.show', [
+            'doctor' => $doctor,
+        ]);
+        }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Doctor $doctor)
     {
-        //
+        return view('admin.doctor.edit', [
+            'doctor' => $doctor,
+        ]);
     }
 
     /**
@@ -95,8 +100,15 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Doctor $doctor)
     {
-        //
+        $is_deleted = $doctor->delete();
+
+        if ($is_deleted) {
+            return back()->with(['success' => 'Magic has been spelled!']);
+        } else {
+            return back()->with(['failure' => 'Magic has failed to spell!']);
+        }
+
     }
 }

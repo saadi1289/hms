@@ -39,7 +39,6 @@ Route::middleware(Authenticate::class)->group(function () {
         Route::patch('picture', 'update_picture')->name('picture');
         Route::patch('password', 'update_password')->name('password');
     });
-
 });
 
 
@@ -53,8 +52,9 @@ Route::controller(DoctorController::class)->middleware(Authenticate::class)->gro
     Route::get('admin/doctor/create', 'create')->name('admin.doctor.create');
     Route::patch('admin/doctor/create', 'store');
     Route::get('admin/doctor/{doctor}/show', 'show')->name('admin.doctor.show');
-    Route::get('admim/doctor/{doctor}/edit' , 'edit')->name('admin.doctor.edit');
-    Route::patch('admim/doctor/{doctor}/edit' , 'update');
+    Route::get('admim/doctor/{doctor}/edit', 'edit')->name('admin.doctor.edit');
+    Route::patch('admin/doctor/details', 'update_details')->name('admin.doctor.details');
+    Route::patch('admin/doctor/picture', 'update_picture')->name('admin.doctor.picture');
+    Route::patch('admin/doctor/password', 'update_password')->name('admin.doctor.password');
     Route::delete('admin/doctor/{doctor}/destroy', 'destroy')->name('admin.doctor.destroy');
 });
-

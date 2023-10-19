@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
@@ -89,13 +90,32 @@ class DoctorController extends Controller
         ]);
     }
 
+
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Doctor $doctor)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'email' =>['required' , 'email' , 'unique:users,email,' . Auth::id()],
+            'experience' => ['required'],
+            'specialization' => ['required'],
+            'phone_number' => ['required'],
+            'old_password' => ['required'],
+            'new_password' => ['required' , 'confirmed'],
+            'password_confirmation' => ['required']
+
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
     }
+
 
     /**
      * Remove the specified resource from storage.

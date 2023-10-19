@@ -72,7 +72,7 @@ class ProfileController extends Controller
         $request->validate([
             'password' => ['required', 'confirmed'],
             'old_password' => ['required'],
-        ]);
+        ]); 
 
         if (Hash::check($request->old_password, Auth::user()->password)) {
             $data = [

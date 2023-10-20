@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Unique;
 
 class DoctorController extends Controller
 {
@@ -78,7 +79,7 @@ class DoctorController extends Controller
         return  view('admin.doctors.show', [
             'doctor' => $doctor,
         ]);
-        }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -95,25 +96,94 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update_details(Request $request, Doctor $doctor)
     {
         $request->validate([
             'name' => ['required'],
-            'email' =>['required' , 'email' , 'unique:users,email,' . Auth::id()],
+            'email' => ['required', 'email', 'unique:users,email,' . Auth::id()],
             'experience' => ['required'],
-            'specialization' => ['required'],
-            'phone_number' => ['required'],
-            'old_password' => ['required'],
-            'new_password' => ['required' , 'confirmed'],
-            'password_confirmation' => ['required']
-
+            'specialization' =>['required'],
+            'phone_number' => ['required' , 'unique:doctors,phone_number,' . Auth::id() ]
         ]);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+        ];
+
+        $is_updated = User::find(Auth::id())->update($data);
+
+        if ($is_updated) {
+            // $id = $is_updated->id;
+            $data = [
+                'specialization' => $request->specialization,
+                'phone_number' => $request->phone_number,
+                'experience' => $request->experience,
+            ];
+            $is_updated = $doctor->update($data);
+            if ($is_updated) {
+                return back()->with(['success' => 'Data successfully updated!']);
+            } else {
+                return back()->with(['failure' => 'Failed to update!']);
+            }
+        } else {
+            return back()->with(['failure' => 'Failed to update!']);
+        }
+    }
+
+    public function update_password(Request $request, Doctor $doctor)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed'],
+
+        ]);
+
+        $data = [
             'password' => Hash::make($request->password),
         ];
+
+        $is_updated = User::find(Auth::id())->update($data);
+
+        if ($is_updated) {
+            return back()->with(['success' => 'User password has been successfully updated!']);
+        } else {
+            return back()->with(['failure' => 'User password has failed to update!']);
+        }
+    }
+
+
+    public function update_picture(Request $request, Doctor $doctor)
+    {
+        $request->validate([
+            'picture' => ['required', 'image', 'mimes:png,jpg,jpeg'],
+        ]);
+
+        // if (!empty(Auth::user()->picture)) {
+        //     unlink('template/img/photos/admin_doctor' . Auth::user()->picture);
+        // }
+
+        $oldPicturePath = public_path('template/img/photos/admin_doctor/' . Auth::user()->picture);
+
+        if (file_exists($oldPicturePath)) {
+            unlink($oldPicturePath);
+        }
+        $file_name = "ACI-" . microtime(true) . "." . $request->picture->extension();
+
+        if ($request->picture->move(public_path('template/img/photos/admin_doctor'), $file_name)) {
+            $data = [
+                'picture' => $file_name,
+            ];
+
+            $is_updated = User::find(Auth::id())->update($data);
+
+            if ($is_updated) {
+                return back()->with(['success' => 'Profile picture has been successfully updated!']);
+            } else {
+                return back()->with(['failure' => 'Profile picture has failed to update!']);
+            }
+        } else {
+            return back()->with(['failure' => 'Profile picture has failed to upload!']);
+        }
     }
 
 
@@ -129,6 +199,5 @@ class DoctorController extends Controller
         } else {
             return back()->with(['failure' => 'Magic has failed to spell!']);
         }
-
     }
 }

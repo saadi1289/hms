@@ -15,16 +15,18 @@
             <div class="row">
                 <div class="col-md-4 col-xl-3">
                     <div class="card mb-3">
-
-                        <form action="{{ route('admin.doctor.picture') }}" method="post" enctype="multipart/form-data">
+                        @include('partials.alerts')
+                        <form action="{{ route('admin.doctor.picture', $doctor) }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Profile Picture</h5>
                             </div>
                             <div class="card-body text-center">
-                                <img src="{{ asset('template/img/contacts/') }}" alt=""
-                                class="img-fluid rounded-circle mb-2" width="150" height="150" />
+                                <img src="{{ asset('template/img/photos/admin_doctor/' . $doctor->picture) }}"
+                                    alt="{{ $doctor->user->name }}" class="img-fluid rounded-circle mb-2" width="150"
+                                    height="150" />
                                 <input type="file" class="form-control @error('picture') is-invalid @enderror"
                                     id="picture" name="picture">
                                 @error('picture')
@@ -37,10 +39,13 @@
                         </form>
                     </div>
 
-                    <form action="{{ route('admin.doctor.password') }}" method="post">
+
+
+
+                    <form action="{{ route('admin.doctor.password', $doctor) }}" method="post">
                         @csrf
                         @method('PATCH')
-
+                        @include('partials.alerts')
                         <div class="col-auto">
                             <label for="password" class="form-label">New Password</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -56,18 +61,6 @@
                                 name="password_confirmation" placeholder="Confirm your password!">
                         </div>
 
-
-
-                        <div class="col-auto">
-                            <label for="old_password" class="form-label">Old Password</label>
-                            <input type="password" class="form-control @error('old_password') is-invalid @enderror"
-                                id="old_password" name="old_password" placeholder="Confirm your old password!">
-                            @error('old_password')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-
                         <div class="mt-3">
                             <input type="submit" class="btn btn-primary" value="Save">
                         </div>
@@ -75,7 +68,8 @@
                 </div>
 
                 <div class="col-md-8 col-xl-9">
-                    <form action="{{ route('admin.doctor.details') }}" method="post">
+                    <form action="{{ route('admin.doctor.details', $doctor) }}" method="post">
+                        @include('partials.alerts')
                         @csrf
                         @method('PATCH')
                         <div class="mb-3">

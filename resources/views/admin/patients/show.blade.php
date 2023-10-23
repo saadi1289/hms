@@ -1,22 +1,23 @@
 @extends('layouts.main')
-@section('title', 'Doctor')
+@section('title', 'Patient')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
             <div class="row">
                 <div class="col-6">
-                    <h2>Doctor</h2>
+                    <h2>Patient</h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a href="{{ route('admin.doctor') }}" class="btn btn-outline-primary">Back</a>
+                    <a href="{{ route('admin.patient') }}" class="btn btn-outline-primary">Back</a>
                 </div>
             </div>
+            @include('partials.alerts')
 
             <div class="row">
                 <div class="col-md-4 col-xl-3">
                     <div class="card mb-3">
-                     @include('partials.alerts')
-                        <form action="{{ route('admin.doctor.picture', $doctor) }}" method="post"
+
+                        <form action="{{ route('admin.patient.picture', $patient) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
@@ -24,8 +25,8 @@
                                 <h5 class="card-title mb-0">Profile Picture</h5>
                             </div>
                             <div class="card-body text-center">
-                                <img src="{{ asset('template/img/photos/admin_doctor/' . $doctor->user->picture) }}"
-                                    alt="{{ $doctor->user->name }}" class="img-fluid rounded-circle mb-2" width="150"
+                                <img src="{{ asset('template/img/photos/admin_patient/' . $patient->user->picture) }}"
+                                    alt="{{ $patient->user->name }}" class="img-fluid rounded-circle mb-2" width="150"
                                     height="150" />
                                 <input type="file" class="form-control @error('picture') is-invalid @enderror"
                                     id="picture" name="picture">
@@ -42,7 +43,7 @@
 
 
 
-                    <form action="{{ route('admin.doctor.password', $doctor) }}" method="post">
+                    <form action="{{ route('admin.patient.password', $patient) }}" method="post">
                         @csrf
                         @method('PATCH')
 
@@ -68,7 +69,7 @@
                 </div>
 
                 <div class="col-md-8 col-xl-9">
-                    <form action="{{ route('admin.doctor.details', $doctor) }}" method="post">
+                    <form action="{{ route('admin.patient.details', $patient) }}" method="post">
 
                         @csrf
                         @method('PATCH')
@@ -76,7 +77,7 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                 name="name" placeholder="Enter your name"
-                                value="{{ old('name') ?? $doctor->user->name }}">
+                                value="{{ old('name') ?? $patient->user->name }}">
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -85,28 +86,58 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                                 name="email" placeholder="Enter your email!"
-                                value="{{ old('email') ?? $doctor->user->email }}">
+                                value="{{ old('email') ?? $patient->user->email }}">
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                         </div>
                         <div class="mb-3">
-                            <label for="experience" class="form-label">Experience</label>
-                            <input type="text" class="form-control @error('experience') is-invalid @enderror"
-                                id="experience" name="experience" placeholder="Enter your experience!"
-                                value="{{ old('experience') ?? $doctor->experience }}">
-                            @error('experience')
+                            <label for="gender" class="form-label">Gender</label>
+                            <input type="text" class="form-control @error('gender') is-invalid @enderror"
+                                id="gender" name="gender" placeholder="Enter your gender!"
+                                value="{{ old('gender') ?? $patient->gender }}">
+                            @error('gender')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                         </div>
                         <div class="mb-3">
-                            <label for="specialization" class="form-label">Specialization</label>
-                            <input type="text" class="form-control @error('specialization') is-invalid @enderror"
-                                id="specialization" name="specialization" placeholder="Enter your specialization!"
-                                value="{{ old('specialization') ?? $doctor->specialization }}">
-                            @error('specialization')
+                            <label for="cnic" class="form-label">CNIC</label>
+                            <input type="text" class="form-control @error('cnic') is-invalid @enderror"
+                                id="cnic" name="cnic" placeholder="Enter your cnic!"
+                                value="{{ old('cnic') ?? $patient->cnic }}">
+                            @error('cnic')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="text" class="form-control @error('age') is-invalid @enderror"
+                                id="age" name="age" placeholder="Enter your age!"
+                                value="{{ old('age') ?? $patient->age }}">
+                            @error('age')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="height" class="form-label">Height</label>
+                            <input type="text" class="form-control @error('height') is-invalid @enderror"
+                                id="height" name="height" placeholder="Enter your height!"
+                                value="{{ old('height') ?? $patient->height }}">
+                            @error('height')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input type="text" class="form-control @error('weight') is-invalid @enderror"
+                                id="weight" name="weight" placeholder="Enter your weight!"
+                                value="{{ old('weight') ?? $patient->weight }}">
+                            @error('weight')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 
@@ -115,16 +146,24 @@
                             <label for="phone_number" class="form-label">Phone Number</label>
                             <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
                                 id="phone_number" name="phone_number" placeholder="Enter your phone_number!"
-                                value="{{ old('phone_number') ?? $doctor->phone_number }}">
+                                value="{{ old('phone_number') ?? $patient->phone_number }}">
                             @error('phone_number')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                         </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                id="address" name="address" placeholder="Enter your address!"
+                                value="{{ old('address') ?? $patient->address }}">
+                            @error('address')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
 
-                        <!-- Add more input fields for other details as needed -->
+                        </div>
 
-                        <!-- Update and Reset buttons for details section -->
+
                         <div>
                             <button type="submit" class="btn btn-primary">Update</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>

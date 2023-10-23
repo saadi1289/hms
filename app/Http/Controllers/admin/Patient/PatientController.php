@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\admin\Doctor;
+namespace App\Http\Controllers\admin\Patient;
 
 use App\Models\User;
-use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Unique;
 
-class DoctorController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.doctors.index', [
-            'doctors' => Doctor::with('user')->get(),
+        return view('admin.patients.index', [
+            'patients' => Patient::with('user')->get(),
         ]);
     }
 
@@ -27,8 +26,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctors.create', [
-            'doctors' => Doctor::all(),
+        return view('admin.patients.create', [
+            'patients' => Patient::all(),
         ]);
     }
 
@@ -41,14 +40,19 @@ class DoctorController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed'],
-            'specialization' => ['required'],
-            'phone_number' => ['required', 'unique:doctors,phone_number'],
-            'experience' => ['required'],
+            'age' => ['required'],
+            'height' => ['required'],
+            'weight' => ['required'],
+            'gender' => ['required'],
+            'address' => ['required'],
+            'phone_number' => ['required', 'unique:patients,phone_number'],
+            'cnic' => ['required', 'unique:patients,cnic'],
+
         ]);
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'type' => 'Doctor',
+            'type' => 'Patient',
             'password' => Hash::make($request->password),
         ];
         $is_created = User::create($data);
@@ -56,11 +60,15 @@ class DoctorController extends Controller
             $id = $is_created->id;
             $data = [
                 'user_id' => $id,
-                'specialization' => $request->specialization,
+                'age' => $request->age,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'gender' => $request->gender,
+                'cnic' => $request->cnic,
+                'address' => $request->address,
                 'phone_number' => $request->phone_number,
-                'experience' => $request->experience,
             ];
-            $is_created = Doctor::create($data);
+            $is_created = Patient::create($data);
             if ($is_created) {
                 return back()->with(['success' => 'Data successfully created!']);
             } else {
@@ -71,23 +79,24 @@ class DoctorController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
      */
-    public function show(Doctor $doctor)
+    public function show(Patient $patient)
     {
-        return  view('admin.doctors.show', [
-            'doctor' => $doctor,
+        return  view('admin.patients.show', [
+            'patient' => $patient,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Doctor $doctor)
+    public function edit(Patient $patient)
     {
-        return view('admin.doctor.edit', [
-            'doctor' => $doctor,
+        return view('admin.patient.edit', [
+            'patient' => $patient,
         ]);
     }
 
@@ -96,14 +105,18 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update_details(Request $request, Doctor $doctor)
+    public function update_details(Request $request, Patient $patient)
     {
         $request->validate([
             'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users,email,' . $doctor->user_id],
-            'experience' => ['required'],
-            'specialization' =>['required'],
-            'phone_number' => ['required' , 'unique:doctors,phone_number,' . $doctor->id ],
+            'email' => ['required', 'email', 'unique:users,email,'  . $patient->user_id],
+            'age' => ['required'],
+            'height' => ['required'],
+            'weight' => ['required'],
+            'gender' => ['required'],
+            'address' => ['required'],
+            'phone_number' => ['required', 'unique:patients,phone_number,'  . $patient->id],
+            'cnic' => ['required', 'unique:patients,cnic,'  . $patient->id],
         ]);
 
         $data = [
@@ -111,16 +124,19 @@ class DoctorController extends Controller
             'email' => $request->email,
         ];
 
-        $is_updated =$doctor->user->update($data);
+        $is_updated = $patient->user->update($data);
 
         if ($is_updated) {
-        //  $id = $is_updated->id;
             $data = [
-                'specialization' => $request->specialization,
+                'age' => $request->age,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'gender' => $request->gender,
+                'cnic' => $request->cnic,
+                'address' => $request->address,
                 'phone_number' => $request->phone_number,
-                'experience' => $request->experience,
             ];
-            $is_updated = $doctor->update($data);
+            $is_updated = $patient->update($data);
             if ($is_updated) {
                 return back()->with(['success' => 'Data successfully updated!']);
             } else {
@@ -131,7 +147,7 @@ class DoctorController extends Controller
         }
     }
 
-    public function update_password(Request $request, Doctor $doctor)
+    public function update_password(Request $request, Patient $patient)
     {
         $request->validate([
             'password' => ['required', 'confirmed'],
@@ -142,7 +158,7 @@ class DoctorController extends Controller
             'password' => Hash::make($request->password),
         ];
 
-        $is_updated = $doctor->user->update($data);
+        $is_updated = $patient->user->update($data);
 
         if ($is_updated) {
             return back()->with(['success' => 'User password has been successfully updated!']);
@@ -152,29 +168,28 @@ class DoctorController extends Controller
     }
 
 
-    public function update_picture(Request $request, Doctor $doctor)
+    public function update_picture(Request $request, Patient $patient)
     {
         $request->validate([
             'picture' => ['required', 'image', 'mimes:png,jpg,jpeg'],
         ]);
-
-        if (!empty($doctor->user->picture)) {
-            unlink('template/img/photos/admin_doctor/' . $doctor->user->picture);
+        if (!empty($patient->user->picture)) {
+            unlink('template/img/photos/admin_patient/' . $patient->user->picture);
         }
 
-        // $oldPicturePath = public_path('template/img/photos/admin_doctor/' . $doctor->user->picture);
+        // $oldPicturePath = public_path('template/img/photos/admin_pateint/' . $patient->user->picture);
 
         // if (file_exists($oldPicturePath)) {
         //     unlink($oldPicturePath);
         // }
         $file_name = "ACI-" . microtime(true) . "." . $request->picture->extension();
 
-        if ($request->picture->move(public_path('template/img/photos/admin_doctor/'), $file_name)) {
+        if ($request->picture->move(public_path('template/img/photos/admin_patient/'), $file_name)) {
             $data = [
                 'picture' => $file_name,
             ];
 
-            $is_updated = $doctor->user->update($data);
+            $is_updated = $patient->user->update($data);
 
             if ($is_updated) {
                 return back()->with(['success' => 'Profile picture has been successfully updated!']);
@@ -190,9 +205,9 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doctor $doctor)
+    public function destroy(Patient $patient)
     {
-        $is_deleted = $doctor->user->delete();
+        $is_deleted = $patient->user->delete();
 
         if ($is_deleted) {
             return back()->with(['success' => 'Magic has been spelled!']);

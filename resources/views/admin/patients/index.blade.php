@@ -1,15 +1,15 @@
 @extends('layouts.main')
-@section('title', 'Doctors')
+@section('title', 'Patients')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
 
             <div class="row">
                 <div class="col-6">
-                    <h2>Doctors</h2>
+                    <h2>Patients</h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a href="{{ route('admin.doctor.create') }}" class="btn btn-outline-primary">Add Doctor</a>
+                    <a href="{{ route('admin.patient.create') }}" class="btn btn-outline-primary">Add Patient</a>
                 </div>
             </div>
 
@@ -18,29 +18,31 @@
                     <div class="card">
                         <div class="card-body">
                             @include('partials.alerts')
-                            @if (count($doctors) > 0)
+                            @if (count($patients) > 0)
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr. No.</th>
                                             <th>Name</th>
-                                            <th>Status</th>
-                                            <th>Specialization</th>
+                                            <th>CNIC</th>
+                                            <th>Phone Number</th>
+                                            <th>Gender</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($doctors as $doctor)
+                                        @foreach ($patients as $patient)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $doctor->user->name }}</td>
+                                                <td>{{ $patient->user->name }}</td>
 
-                                                <td>{{ $doctor->status }}</td>
-                                                <td>{{ $doctor->specialization }}</td>
+                                                <td>{{ $patient->cnic }}</td>
+                                                <td>{{ $patient->phone_number }}</td>
+                                                <td>{{ $patient->gender }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.doctor.show', $doctor) }}"
+                                                    <a href="{{ route('admin.patient.show', $patient) }}"
                                                         class="btn btn-primary">Show</a>
-                                                    <form action="{{ route('admin.doctor.destroy', $doctor) }}"
+                                                    <form action="{{ route('admin.patient.destroy', $patient) }}"
                                                         method="post" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')

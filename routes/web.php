@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\Doctor\DoctorController;
+use App\Http\Controllers\admin\Patient\PatientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,16 @@ Route::controller(DoctorController::class)->middleware(Authenticate::class)->gro
     Route::patch('admin/doctor/{doctor}/password', 'update_password')->name('admin.doctor.password');
     Route::delete('admin/doctor/{doctor}/destroy', 'destroy')->name('admin.doctor.destroy');
 });
+
+Route::controller(PatientController::class)->middleware(Authenticate::class)->group(function () {
+    Route::get('admin/patients', 'index')->name('admin.patient');
+    Route::get('admin/patient/create', 'create')->name('admin.patient.create');
+    Route::patch('admin/patient/create', 'store');
+    Route::get('admin/patient/{patient}/show', 'show')->name('admin.patient.show');
+    Route::get('admim/patient/{patient}/edit', 'edit')->name('admin.patient.edit');
+    Route::patch('admin/patient/{patient}/details', 'update_details')->name('admin.patient.details');
+    Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
+    Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
+    Route::delete('admin/patient/{patient}/destroy', 'destroy')->name('admin.patient.destroy');
+});
+

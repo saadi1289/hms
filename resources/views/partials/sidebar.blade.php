@@ -17,12 +17,12 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.patient') }}">
+                <a class="sidebar-link" href="{{route('admin.patient') }}">
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Patients</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+                <a class="sidebar-link" href="{{route('admin.appointments') }}">
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Appointments</span>
                 </a>
             </li>

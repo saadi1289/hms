@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\appointmnet\AppointmentController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -70,5 +71,18 @@ Route::controller(PatientController::class)->middleware(Authenticate::class)->gr
     Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
     Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
     Route::delete('admin/patient/{patient}/destroy', 'destroy')->name('admin.patient.destroy');
+});
+
+Route::controller(AppointmentController::class)->middleware(Authenticate::class)->group(function () {
+    Route::get('admin/appointments', 'index')->name('admin.appointments');
+    Route::get('admin/appointment/create', 'create')->name('admin.appointment.create');
+    Route::patch('admin/appointment/create', 'store');
+    Route::get('admin/appointment/{appointment}/show', 'show')->name('admin.appointment.show');
+    Route::get('admim/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
+    Route::get('admim/appointment/{appointment}/edit', 'update');
+    // Route::patch('admin/patient/{patient}/details', 'update_details')->name('admin.patient.details');
+    // Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
+    // Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
+    Route::delete('admin/appointment/{appointment}/destroy', 'destroy')->name('admin.appointment.destroy');
 });
 

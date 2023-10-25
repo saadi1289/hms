@@ -8,7 +8,7 @@
                     <h2>Add Appointment</h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a href="" class="btn btn-outline-primary">Back</a>
+                    <a href="{{ route('admin.appointments') }}" class="btn btn-outline-primary">Back</a>
                 </div>
             </div>
 
@@ -17,24 +17,45 @@
                     <div class="card">
                         <div class="card-body">
                             @include('partials.alerts')
+
                             <form action="{{ route('admin.appointment.create') }}" method="post">
                                 @csrf
                                 @method('PATCH')
-                                <h3 class="mb-3">Patient Details </h3>
+                                {{-- <h3 class="mb-3">Patient Details </h3> --}}
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="name" class="form-label"> Patient Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                id="name" name="name" placeholder="Enter your name!"
-                                                value="{{ old('name') }}">
-                                            @error('name')
+                                            <label for="patient_id" class="form-label"> Patient Name</label>
+                                            <select class="form-select" id="patient_id" name="patient_id">
+                                                <option value="">Select Patient</option>
+                                                <!-- Loop through the list of doctor names from the database -->
+                                                @foreach ($patients as $patient)
+                                                    <option value="{{ $patient->id }}">{{ $patient->user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('patient_id')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="doctor_id" class="form-label">Doctor Name</label>
+                                            <select class="form-select" id="doctor_id" name="doctor_id">
+                                                <option value="">Select Doctor</option>
+                                                <!-- Loop through the list of doctor names from the database -->
+                                                @foreach ($doctors as $doctor)
+                                                    <option value="{{ $doctor->id }}">{{ $doctor->user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('doctor_id')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="age" class="form-label">Age</label>
                                             <input type="text" class="form-control @error('age') is-invalid @enderror"
@@ -44,9 +65,9 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="gender" class="form-label">Gender</label>
                                             <input type="text" class="form-control @error('gender') is-invalid @enderror"
@@ -56,11 +77,11 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
@@ -70,9 +91,9 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="phone_number" class="form-label">Phone Number</label>
                                             <input type="text"
@@ -83,9 +104,9 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="cnic" class="form-label">CNIC</label>
                                             <input type="text" class="form-control @error('cnic') is-invalid @enderror"
@@ -95,11 +116,84 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div> --}}
+                                </div>
+
+
+                                {{-- <h3 class="my-3">
+                                    Doctor Details
+                                </h3> --}}
+                                <div class="row">
+
+
+                                    {{-- <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="specialization" class="form-label">Specialization</label>
+                                            <input type="text" class="form-control @error('specialization') is-invalid @enderror"
+                                                id="specialization" name="specialization" placeholder="Enter specialization"
+                                                value="{{ old('specialization') }}">
+                                            @error('specialization')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div> --}}
+
+                                    {{-- <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="experience" class="form-label">Experience</label>
+                                            <input type="text" class="form-control @error('experience') is-invalid @enderror"
+                                                id="experience" name="experience" placeholder="Enter experience"
+                                                value="{{ old('experience') }}">
+                                            @error('experience')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div> --}}
+                                </div>
+
+                                {{-- <h3 class="my-3">
+                                    Appointment Details
+                                </h3> --}}
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="date" class="form-label">Date</label>
+                                            <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                                id="date" name="date">
+                                        </div>
+                                        @error('date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="time" class="form-label">Time</label>
+                                            <input type="time" class="form-control @error('time') is-invalid @enderror"
+                                                id="time" name="time">
+                                        </div>
+                                        @error('time')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="fee" class="form-label">Fee</label>
+                                            <input type="text" class="form-control @error('fee') is-invalid @enderror"
+                                                id="fee" name="fee">
+                                        </div>
+                                        @error('fee')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <label for="description" class="form-label">Description</label>
                                         <input type="text"
                                             class="form-control @error('description') is-invalid @enderror" id="description"
@@ -110,90 +204,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <h3 class="my-3">
-                                    Doctor Details
-                                </h3>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Doctor Name</label>
-                                            <select class="form-select" id="name" name="name">
-                                                <option value="">Select Doctor</option>
-                                                <!-- Loop through the list of doctor names from the database -->
-                                                {{-- @foreach($doctorNames as $doctorName) --}}
-                                                    <option value=""></option>
-                                                {{-- @endforeach --}}
-                                            </select>
-                                            @error('doctor_name')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="specialization" class="form-label">Specialization</label>
-                                            <input type="text" class="form-control @error('specialization') is-invalid @enderror"
-                                                id="specialization" name="specialization" placeholder="Enter specialization"
-                                                value="{{ old('specialization') }}">
-                                            @error('specialization')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="experience" class="form-label">Experience</label>
-                                            <input type="text" class="form-control @error('experience') is-invalid @enderror"
-                                                id="experience" name="experience" placeholder="Enter experience"
-                                                value="{{ old('experience') }}">
-                                            @error('experience')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h3 class="my-3">
-                                    Appointment Details
-                                </h3>
-
-                                <div class="row">
-
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="date" class="form-label">Date</label>
-                                            <input type="date" class="form-control" id="date" name="date">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="time" class="form-label">Time</label>
-                                            <input type="time" class="form-control" id="time" name="time">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="fee" class="form-label">Fee</label>
-                                            <input type="text" class="form-control" id="fee" name="fee">
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="mt-3">
                                     <input type="submit" class="btn btn-primary" value="Save">
                                 </div>
-
-                                    </div>
-                                </div>
-
-                            </form>
                         </div>
                     </div>
+
+                    </form>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </main>
 @endsection

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointment', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->references('id')->on('patients')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('doctor_id')->references('id')->on('doctors')->onUpdate('cascade')->onDelete('cascade');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointment');
+        Schema::dropIfExists('appointments');
     }
 };

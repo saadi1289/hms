@@ -78,8 +78,8 @@ Route::controller(AppointmentController::class)->middleware(Authenticate::class)
     Route::get('admin/appointment/create', 'create')->name('admin.appointment.create');
     Route::patch('admin/appointment/create', 'store');
     Route::get('admin/appointment/{appointment}/show', 'show')->name('admin.appointment.show');
-    Route::get('admim/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
-    Route::get('admim/appointment/{appointment}/edit', 'update');
+    Route::get('admin/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
+    Route::patch('admin/appointment/{appointment}/edit', 'update');
     // Route::patch('admin/patient/{patient}/details', 'update_details')->name('admin.patient.details');
     // Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
     // Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');

@@ -14,8 +14,6 @@ class AppointmentController extends Controller
     {
         return view( 'admin.appointments.index' , [
             'appointments'=> Appointment::all(),
-            // 'patients' => Patient::all(),
-            // 'doctors'   => Doctor::all()
         ]);
     }
     /**

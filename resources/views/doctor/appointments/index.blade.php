@@ -1,11 +1,11 @@
 @extends('layouts.doctor_main')
-@section('title', 'Patients')
+@section('title', 'Appointments')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
             <div class="row">
                 <div class="col-6">
-                    <h2>Patients</h2>
+                    <h2>Appointmets</h2>
                 </div>
             </div>
             <div class="row">
@@ -13,27 +13,29 @@
                     <div class="card">
                         <div class="card-body">
                             @include('partials.alerts')
-                            @if (count($patients) > 0)
+                            @if (count($appointments) > 0)
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sr. No.</th>
-                                            <th>Name</th>
-                                            <th>CNIC</th>
-                                            <th>Phone Number</th>
-                                            <th>Gender</th>
+                                            <th>Patient Name</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Fee</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($patients as $patient)
+                                        @foreach ($appointments as $appointment)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $patient->patient->user->name }}</td>
+                                                <td>{{ $appointment->patient->user->name }}</td>
 
-                                                <td>{{ $patient->patient->cnic }}</td>
-                                                <td>{{ $patient->patient->phone_number }}</td>
-                                                <td>{{ $patient->patient->gender }}</td>
+                                                <td>{{ $appointment->date }}</td>
+                                                <td>{{ $appointment->time }}</td>
+                                                <td>{{ $appointment->fee }}</td>
+                                                <td>{{ $appointment->description }}</td>
                                                 <td class="text-center">
                                                     <a href="" class="btn btn-primary">Show</a>
                                                 </td>

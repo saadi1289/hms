@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\Doctor\DoctorController;
 use App\Http\Controllers\admin\Patient\PatientController;
 use App\Http\Controllers\doctor\DoctorDashboardController;
 use App\Http\Controllers\admin\appointmnet\AppointmentController;
+use App\Http\Controllers\doctor\DoctorAppointmentController;
 use App\Http\Controllers\doctor\DoctorPatientController;
 
 /*
@@ -100,4 +101,15 @@ Route::controller(DoctorPatientController::class)->middleware(Authenticate::clas
     // Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
     // Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
     // Route::delete('admin/patient/{patient}/destroy', 'destroy')->name('admin.patient.destroy');
+});
+
+
+Route::controller(DoctorAppointmentController::class)->middleware(Authenticate::class)->group(function () {
+    Route::get('doctor/appointments', 'index')->name('doctor.appointments');
+    // Route::get('admin/appointment/create', 'create')->name('admin.appointment.create');
+    // Route::patch('admin/appointment/create', 'store');
+    // Route::get('admin/appointment/{appointment}/show', 'show')->name('admin.appointment.show');
+    // Route::get('admin/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
+    // Route::patch('admin/appointment/{appointment}/edit', 'update');
+    // Route::delete('admin/appointment/{appointment}/destroy', 'destroy')->name('admin.appointment.destroy');
 });

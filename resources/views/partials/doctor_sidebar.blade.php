@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+                <a class="sidebar-link" href="{{ route('doctor.appointments') }}">
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Appointments</span>
                 </a>
             </li>

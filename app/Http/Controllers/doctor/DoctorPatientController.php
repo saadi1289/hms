@@ -17,13 +17,17 @@ class DoctorPatientController extends Controller
             ->select('patient_id') // Select only the 'patient_id' column
             ->distinct() // Apply the DISTINCT constraint
             ->get();
-        // foreach ($patients as $patient) {
-        //     echo $patient->patient->user->name . "<br>";
-        //     echo $patient->patient->user->email . "<br>";
-        // };
         return view('doctor.patients.index', [
             'patients' => $patients,
 
         ]);
+    }
+
+    public function show(Patient $patient)
+    {
+        return view('doctor.patients.show' , [
+            'patient' => $patient,
+        ]);
+
     }
 }

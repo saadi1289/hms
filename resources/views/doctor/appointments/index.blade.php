@@ -37,7 +37,7 @@
                                                 <td>{{ $appointment->fee }}</td>
                                                 <td>{{ $appointment->description }}</td>
                                                 <td class="text-center">
-                                                    <a href="" class="btn btn-primary">Show</a>
+                                                    <a href="{{ route('doctor.appointment.show' , $appointment) }}" class="btn btn-primary">Show</a>
                                                 </td>
                                             </tr>
                                         @endforeach

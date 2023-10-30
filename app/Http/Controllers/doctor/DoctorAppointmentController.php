@@ -22,4 +22,11 @@ class DoctorAppointmentController extends Controller
 
         ]);
     }
+
+    public function show(Appointment $appointment)
+    {
+        return  view('doctor.appointments.show', [
+            'appointment' => $appointment,
+        ]);
+    }
 }

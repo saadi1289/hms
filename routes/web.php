@@ -7,11 +7,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\Doctor\DoctorController;
+use App\Http\Controllers\doctor\DoctorCheckupController;
+use App\Http\Controllers\doctor\DoctorPatientController;
 use App\Http\Controllers\admin\Patient\PatientController;
 use App\Http\Controllers\doctor\DoctorDashboardController;
-use App\Http\Controllers\admin\appointmnet\AppointmentController;
 use App\Http\Controllers\doctor\DoctorAppointmentController;
-use App\Http\Controllers\doctor\DoctorPatientController;
+use App\Http\Controllers\admin\appointmnet\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,7 @@ Route::controller(DoctorDashboardController::class)->middleware(Authenticate::cl
 
 Route::controller(DoctorPatientController::class)->middleware(Authenticate::class)->group(function () {
     Route::get('doctor/patients', 'index')->name('doctor.patient');
+    Route::get('doctor/patient/{patient}/show', 'show')->name('doctor.patient.show');
     // Route::get('admin/patient/create', 'create')->name('admin.patient.create');
     // Route::patch('admin/patient/create', 'store');
     // Route::get('admin/patient/{patient}/show', 'show')->name('admin.patient.show');
@@ -106,10 +108,11 @@ Route::controller(DoctorPatientController::class)->middleware(Authenticate::clas
 
 Route::controller(DoctorAppointmentController::class)->middleware(Authenticate::class)->group(function () {
     Route::get('doctor/appointments', 'index')->name('doctor.appointments');
-    // Route::get('admin/appointment/create', 'create')->name('admin.appointment.create');
-    // Route::patch('admin/appointment/create', 'store');
-    // Route::get('admin/appointment/{appointment}/show', 'show')->name('admin.appointment.show');
-    // Route::get('admin/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
-    // Route::patch('admin/appointment/{appointment}/edit', 'update');
-    // Route::delete('admin/appointment/{appointment}/destroy', 'destroy')->name('admin.appointment.destroy');
+    Route::get('doctor/appointment/{appointment}/show', 'show')->name('doctor.appointment.show');
+
+});
+Route::controller(DoctorCheckupController::class)->middleware(Authenticate::class)->group(function () {
+    Route::get('doctor/appointment/{appointment}/checkup', 'showCheckup')->name('doctor.appointment.checkup');
+
+
 });

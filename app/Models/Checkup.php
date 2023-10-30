@@ -14,4 +14,6 @@ class Checkup extends Model
         'disease',
         'medication',
     ];
+
+    
 }

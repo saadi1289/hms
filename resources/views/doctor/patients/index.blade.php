@@ -35,7 +35,7 @@
                                                 <td>{{ $patient->patient->phone_number }}</td>
                                                 <td>{{ $patient->patient->gender }}</td>
                                                 <td class="text-center">
-                                                    <a href="" class="btn btn-primary">Show</a>
+                                                    <a href="{{ route('doctor.patient.show', $patient->patient) }}" class="btn btn-primary">Show</a>
                                                 </td>
                                             </tr>
                                         @endforeach

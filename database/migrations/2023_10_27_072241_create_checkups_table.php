@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('checkups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->references('id')->on('patients')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('appointment_id')->references('id')->on('appointments')->onUpdate('cascade')->onDelete('cascade');
             $table->string('symptoms');
             $table->string('disease');
             $table->string('medications');

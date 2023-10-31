@@ -95,24 +95,14 @@ Route::controller(DoctorDashboardController::class)->middleware(Authenticate::cl
 Route::controller(DoctorPatientController::class)->middleware(Authenticate::class)->group(function () {
     Route::get('doctor/patients', 'index')->name('doctor.patient');
     Route::get('doctor/patient/{patient}/show', 'show')->name('doctor.patient.show');
-    // Route::get('admin/patient/create', 'create')->name('admin.patient.create');
-    // Route::patch('admin/patient/create', 'store');
-    // Route::get('admin/patient/{patient}/show', 'show')->name('admin.patient.show');
-    // Route::get('admim/patient/{patient}/edit', 'edit')->name('admin.patient.edit');
-    // Route::patch('admin/patient/{patient}/details', 'update_details')->name('admin.patient.details');
-    // Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
-    // Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
-    // Route::delete('admin/patient/{patient}/destroy', 'destroy')->name('admin.patient.destroy');
 });
 
 
 Route::controller(DoctorAppointmentController::class)->middleware(Authenticate::class)->group(function () {
     Route::get('doctor/appointments', 'index')->name('doctor.appointments');
     Route::get('doctor/appointment/{appointment}/show', 'show')->name('doctor.appointment.show');
-
 });
 Route::controller(DoctorCheckupController::class)->middleware(Authenticate::class)->group(function () {
-    Route::get('doctor/appointment/{appointment}/checkup', 'showCheckup')->name('doctor.appointment.checkup');
-
-
+    Route::get('doctor/checkup/{appointment}/create', 'create')->name('doctor.checkup.create');
+    Route::patch('doctor/checkup/{appointment}/create', 'store');
 });

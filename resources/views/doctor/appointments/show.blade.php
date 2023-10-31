@@ -16,10 +16,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @include('partials.alerts')
-                            {{-- <form action="{{ route('admin.appointment.edit') }}" method="post"> --}}
-                            {{-- @csrf
-                            @method('PATCH') --}}
                             <h3 class="mb-3">Patient Details </h3>
                             <div class="row">
                                 <div class="col-md-4">
@@ -131,9 +127,17 @@
                         </div>
                     </div>
                     <div class="mb-3 text-center">
-                        <a href="{{ route('') }}"
-                            class="btn btn-primary">Checkup</a>
+                        @if ($appointment->checkup)
+                            <a href="{{ route('doctor.patient.show', $appointment->id ) }}" class="btn btn-success">
+                                <i class="fas fa-clipboard-check"></i> View Checkup
+                            </a>
+                        @else
+                            <a href="{{ route('doctor.checkup.create', $appointment) }}" class="btn btn-primary">
+                                <i class="fas fa-plus-circle"></i> Create Checkup
+                            </a>
+                        @endif
                     </div>
+
                     {{-- </form> --}}
                 </div>
             </div>

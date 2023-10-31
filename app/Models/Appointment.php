@@ -26,4 +26,8 @@ class Appointment extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+
+    public function checkup(){
+        return $this->hasOne(CheckUp::class);
+    }
 }

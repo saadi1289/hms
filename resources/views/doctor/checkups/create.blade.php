@@ -16,52 +16,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            @include('partials.alerts')
-                            {{-- <form action="{{ route('admin.appointment.edit') }}" method="post"> --}}
-                            {{-- @csrf
-                            @method('PATCH') --}}
-                            <h3 class="mb-3">Check-up</h3>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label"> Patient Name</label>
-                                        <p class="form-control">
-                                            {{ $appointment->patient->user->name }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="age" class="form-label">Age</label>
-                                        <p class="form-control">
-                                            {{ $appointment->patient->age }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="gender" class="form-label">Gender</label>
-                                        <p class="form-control">
-                                            {{ $appointment->patient->gender }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <p class="form-control">
-                                        {{ $appointment->description }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form action="" method="POST">
+                            <form action="{{ route('doctor.checkup.create', $appointment ) }}" method="POST">
                                 @include('partials.alerts')
                                 @csrf
                                 @method('PATCH')

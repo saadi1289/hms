@@ -10,10 +10,22 @@ class Checkup extends Model
     use HasFactory;
     protected $fillable =[
         'patient_id',
+        'appointment_id',
         'symptoms',
         'disease',
-        'medication',
+        'medications',
+        'precautions',
+        'tests',
     ];
 
-    
+
+    public function appointment(){
+        return $this->hasOne(Appointment::class);
+    }
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
+
+
 }

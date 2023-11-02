@@ -29,4 +29,18 @@ class DoctorAppointmentController extends Controller
             'appointment' => $appointment,
         ]);
     }
+
+    public function updateStatus(Appointment $appointment, $status)
+    {
+        $data = [
+            'status' => $status,
+        ];
+
+        $is_updated = $appointment->update($data);
+        if ($is_updated) {
+            return back()->with(['success' => 'Appointment Approved']);
+        } else {
+            return back()->with(['failure' => "Appointment Declined"]);
+        }
+    }
 }

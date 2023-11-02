@@ -24,7 +24,7 @@ class DoctorCheckupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , Appointment $appointment)
+    public function store(Request $request, Appointment $appointment)
     {
         $request->validate([
             'symptoms' => ['required'],
@@ -41,12 +41,12 @@ class DoctorCheckupController extends Controller
             'tests' => $request->tests,
         ];
         $is_created = Checkup::create($data);
-        if ($is_created){
+        if ($is_created) {
             return back()->with(['success' => 'Checkup has been created successfully']);
-            }else{
-                return back()->with(['failure'=>"Failed to create checkup"]);
-            }
+        } else {
+            return back()->with(['failure' => "Failed to create checkup"]);
         }
+    }
     /**
      * Display the specified resource.
      */

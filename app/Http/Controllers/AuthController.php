@@ -28,6 +28,7 @@ class AuthController extends Controller
             } elseif ($type == "Doctor") {
                 return redirect()->route('doctor.dashboard');
             } elseif ($type == "Patient") {
+                return redirect()->route('patient.dashboard');
             } else {
                 Auth::logout();
                 return redirect()->route('login');

@@ -1,14 +1,14 @@
-@extends('layouts.doctor_main')
+@extends('layouts.patient_main')
 @section('title', 'Add Appointment')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
             <div class="row">
                 <div class="col-6">
-                    <h2>Appointment Details</h2>
+                    <h2>Add Appointment</h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a href="{{ route('doctor.appointments') }}" class="btn btn-outline-primary">Back</a>
+                    <a href="{{ route('admin.appointments') }}" class="btn btn-outline-primary">Back</a>
                 </div>
             </div>
 
@@ -16,6 +16,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            @include('partials.alerts')
+                            {{-- <form action="{{ route('admin.appointment.edit') }}" method="post"> --}}
+                            @csrf
+                            @method('PATCH')
                             <h3 class="mb-3">Patient Details </h3>
                             <div class="row">
                                 <div class="col-md-4">
@@ -126,22 +130,8 @@
 
                         </div>
                     </div>
-                    <div class="mb-3 text-center">
-                        @if ($appointment->status == 'Approved')
-                        @if ($appointment->checkup)
-                        <a href="{{ route('doctor.patient.show', $appointment->id ) }}" class="btn btn-success">
-                            <i class="fas fa-clipboard-check"></i> View Checkup
-                        </a>
-                    @else
-                        <a href="{{ route('doctor.checkup.create', $appointment) }}" class="btn btn-primary">
-                            <i class="fas fa-plus-circle"></i> Create Checkup
-                        </a>
-                    @endif
-                        @endif
 
-                    </div>
-
-                    {{-- </form> --}}
+                    </form>
                 </div>
             </div>
         </div>

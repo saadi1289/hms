@@ -24,7 +24,7 @@
                                         <tr>
                                             <th>Sr. No.</th>
                                             <th>Name</th>
-                                            <th>Status</th>
+                                            <th>Experience</th>
                                             <th>Specialization</th>
                                             <th>Action</th>
                                         </tr>
@@ -35,7 +35,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $doctor->user->name }}</td>
 
-                                                <td>{{ $doctor->status }}</td>
+                                                <td>{{ $doctor->experience }}</td>
                                                 <td>{{ $doctor->specialization }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.doctor.show', $doctor) }}"

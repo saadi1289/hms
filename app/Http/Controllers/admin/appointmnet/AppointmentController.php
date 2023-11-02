@@ -12,8 +12,8 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        return view( 'admin.appointments.index' , [
-            'appointments'=> Appointment::all(),
+        return view('admin.appointments.index', [
+            'appointments' => Appointment::all(),
         ]);
     }
     /**
@@ -39,6 +39,15 @@ class AppointmentController extends Controller
             'fee' => ['required'],
         ]);
 
+        // Check for existing appointments with the same date and time
+        $existingAppointment = Appointment::where('date', $request->date)
+            ->where('time', $request->time)
+            ->first();
+
+        if ($existingAppointment) {
+            return back()->with(['failure' => 'An appointment already exists at this date and time.']);
+        }
+
         $data = [
             'patient_id' => $request->patient_id,
             'doctor_id' => $request->doctor_id,
@@ -47,14 +56,16 @@ class AppointmentController extends Controller
             'time' => $request->time,
             'fee' => $request->fee,
         ];
-
+        
         $is_created = Appointment::create($data);
+
         if ($is_created) {
             return back()->with(['success' => 'Data successfully created!']);
         } else {
             return back()->with(['failure' => 'Failed to create!']);
         }
     }
+
 
     public function show(Appointment $appointment)
     {
@@ -65,8 +76,8 @@ class AppointmentController extends Controller
 
     public function edit(Appointment $appointment)
     {
-        return view('admin.appointments.edit' , [
-            'appointment'=>$appointment,
+        return view('admin.appointments.edit', [
+            'appointment' => $appointment,
             'patients' => Patient::all(),
             'doctors' => Doctor::all(),
         ]);

@@ -27,11 +27,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="">
-                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Medics</span>
-                </a>
-            </li>
+          
         </ul>
     </div>
 </nav>

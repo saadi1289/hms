@@ -6,12 +6,13 @@
 
 <body>
     <div class="wrapper">
-        @include('partials.doctor_sidebar')
+        @include('partials.patient_sidebar')
 
         <div class="main">
-            @include('partials.doctor_topbar')
+            @include('partials.patient_topbar')
 
             @yield('content')
+
 
         </div>
     </div>

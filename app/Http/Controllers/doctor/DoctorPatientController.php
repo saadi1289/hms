@@ -14,7 +14,7 @@ class DoctorPatientController extends Controller
     public function index()
     {
         $patients = Appointment::where('doctor_id', '=', Auth::user()->doctor->id)
-            ->select('patient_id') // Select only the 'patient_id' column
+            ->select('patient_id') // Select only the 'patient_id`' column
             ->distinct() // Apply the DISTINCT constraint
             ->get();
         return view('doctor.patients.index', [

@@ -1,13 +1,18 @@
-@extends('layouts.doctor_main')
+@extends('layouts.patient_main')
 @section('title', 'Appointments')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
+
             <div class="row">
                 <div class="col-6">
-                    <h2>Appointmets</h2>
+                    <h2>Appointments</h2>
+                </div>
+                <div class="col-6 text-end">
+                    <a href="{{ route('patient.appointment.create') }}" class="btn btn-outline-primary">Book An Appointment</a>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -16,39 +21,36 @@
                             @if (count($appointments) > 0)
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr class="text-center">
+                                        <tr>
                                             <th>Sr. No.</th>
                                             <th>Patient Name</th>
+                                            <th>Doctor Name</th>
                                             <th>Date</th>
-                                            <th>Time</th>
+                                            <th>Time Slot</th>
                                             <th>Fee</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
+                                            <th>status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($appointments as $appointment)
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $appointment->patient->user->name }}</td>
 
+                                                <td>{{ $appointment->doctor->user->name }}</td>
                                                 <td>{{ $appointment->date }}</td>
-                                                <td>{{ $appointment->time }}</td>
+                                                <td>{{ $appointment->time  }}</td>
                                                 <td>{{ $appointment->fee }}</td>
-                                                <td>{{ $appointment->description }}</td>
+                                                <td>{{ $appointment->status}}</td>
                                                 <td class="text-center">
-                                                    {{ $appointment->status }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('doctor.appointment.show', $appointment) }}"
-                                                        class="btn btn-primary">Show</a>
-                                                   @if ($appointment->status == 'pending')
-                                                    <a href="{{ route('doctor.appointment.updateStatus', [$appointment, 'Approved']) }}" class="btn btn-outline-success">Accept</a>
-                                                    <a href="{{ route('doctor.appointment.updateStatus', [$appointment, 'Declined']) }}" class="btn btn-outline-danger">Decline</a>
-                                                    @else
-
-                                                    @endif
+                                                    <a href="{{ route('patient.appointment.show' , $appointment) }}" class="btn btn-primary">Show</a>
+                                                    <form action="{{ route('patient.appointment.destroy' , $appointment) }}" method="post" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                                    </form>
+                                                    <a href="{{ route('patient.appointment.edit' , $appointment) }}" class="btn btn-primary">Edit</a>
                                                 </td>
                                             </tr>
                                         @endforeach

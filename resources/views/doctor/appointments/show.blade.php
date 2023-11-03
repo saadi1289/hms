@@ -128,15 +128,16 @@
                     </div>
                     <div class="mb-3 text-center">
                         @if ($appointment->status == 'Approved')
-                        @if ($appointment->checkup)
-                        <a href="{{ route('doctor.patient.show', $appointment->id ) }}" class="btn btn-success">
-                            <i class="fas fa-clipboard-check"></i> View Checkup
-                        </a>
-                    @else
-                        <a href="{{ route('doctor.checkup.create', $appointment) }}" class="btn btn-primary">
-                            <i class="fas fa-plus-circle"></i> Create Checkup
-                        </a>
-                    @endif
+                            @if ($appointment->checkup)
+                                <a href="{{ route('doctor.patient.show', $appointment->patient_id) }}"
+                                    class="btn btn-success">
+                                    <i class="fas fa-clipboard-check"></i> View Checkup
+                                </a>
+                            @else
+                                <a href="{{ route('doctor.checkup.create', $appointment) }}" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle"></i> Create Checkup
+                                </a>
+                            @endif
                         @endif
 
                     </div>

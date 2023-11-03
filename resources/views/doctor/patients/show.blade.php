@@ -67,7 +67,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        
+                        @if ($patient->checkup->count() > 0)
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -96,6 +96,10 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @else
+                        <div class="alert alert-danger">Appointment declined or pending</div>
+                        @endif
+
                     </div>
                 </div>
             </div>

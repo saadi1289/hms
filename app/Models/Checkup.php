@@ -20,7 +20,7 @@ class Checkup extends Model
 
 
     public function appointment(){
-        return $this->hasOne(Appointment::class);
+        return $this->belongsTo(Appointment::class);
     }
 
     public function patient(){

@@ -25,7 +25,9 @@ class RedirectIfAuthenticated
                 if ($type == "Admin") {
                     return redirect()->route('admin.dashboard');
                 } elseif ($type == "Doctor") {
+                    return redirect()->route('doctor.dashboard');
                 } elseif ($type == "Patient") {
+                    return redirect()->route('patient.dashboard');
                 } else {
                     return redirect()->route('login');
                 }

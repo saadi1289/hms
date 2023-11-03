@@ -55,8 +55,9 @@ class AppointmentController extends Controller
             'date' => $request->date,
             'time' => $request->time,
             'fee' => $request->fee,
+            'status' => 'Approved',
         ];
-        
+
         $is_created = Appointment::create($data);
 
         if ($is_created) {

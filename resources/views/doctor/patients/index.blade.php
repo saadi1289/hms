@@ -34,6 +34,7 @@
                                                 <td>{{ $patient->patient->cnic }}</td>
                                                 <td>{{ $patient->patient->phone_number }}</td>
                                                 <td>{{ $patient->patient->gender }}</td>
+
                                                 <td class="text-center">
                                                     <a href="{{ route('doctor.patient.show', $patient->patient) }}" class="btn btn-primary">Show</a>
                                                 </td>

@@ -110,7 +110,7 @@ Route::middleware(Authenticate::class)->group(function () {
     Route::middleware(DoctorAuthenticate::class)->group(function () {
 
         Route::controller(DoctorProfileController::class)->prefix('profile/doctor')->name('profile.doctor.')->group(function () {
-            Route::get('/edit', 'edit')->name('.edit');
+            Route::get('/edit', 'edit')->name('edit');
             Route::patch('/details', 'update_details')->name('details');
             Route::patch('/picture', 'update_picture')->name('picture');
             Route::patch('/password', 'update_password')->name('password');
@@ -144,7 +144,7 @@ Route::middleware(Authenticate::class)->group(function () {
     Route::middleware(PatientAuthenticate::class)->group(function () {
 
         Route::controller(PatientProfileController::class)->prefix('profile/patient')->name('profile.patient.')->group(function () {
-            Route::get('/edit', 'edit')->name('.edit');
+            Route::get('/edit', 'edit')->name('edit');
             Route::patch('/details', 'update_details')->name('details');
             Route::patch('/picture', 'update_picture')->name('picture');
             Route::patch('/password', 'update_password')->name('password');

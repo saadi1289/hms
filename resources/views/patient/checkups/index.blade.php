@@ -45,7 +45,7 @@
                             </tbody>
                         </table>
                         @else
-                        <div class="alert alert-danger">Appointment declined or pending</div>
+                        <div class="alert alert-danger text-center">Appointment declined or pending</div>
                         @endif
 
                     </div>

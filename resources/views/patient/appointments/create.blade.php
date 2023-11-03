@@ -27,16 +27,7 @@
                                             <label for="patient_id" class="form-label"> Patient Name</label>
                                             <input type="text" class="form-control" id="patient_id" name="patient_id"
                                                 value="{{ Auth::user()->patient->user->name }}" disabled>
-                                            {{-- <select class="form-select" id="patient_id" name="patient_id">
-                                                <option value="">Select Patient</option>
-                                                 <!-- Loop through the list of doctor names from the database -->
-                                                 @foreach ($patients as $patient)
-                                                    <option value="{{ $patient->id }}">{{ $patient->user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('patient_id')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror --}}
+
                                         </div>
                                     </div>
 

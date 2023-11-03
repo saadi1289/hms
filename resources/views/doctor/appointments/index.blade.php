@@ -5,7 +5,7 @@
         <div class="container-fluid p-0">
             <div class="row">
                 <div class="col-6">
-                    <h2>Appointmets</h2>
+                    <h2>Appointments</h2>
                 </div>
             </div>
             <div class="row">

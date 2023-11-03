@@ -19,7 +19,7 @@
                         <div class="card-body">
                             @include('partials.alerts')
                             @if (count($appointments) > 0)
-                                <table class="table table-bordered">
+                                <table class="table table-bordered text-center">
                                     <thead>
                                         <tr>
                                             <th>Sr. No.</th>

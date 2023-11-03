@@ -66,9 +66,6 @@
                                                     class="btn btn-primary">
                                                 <input type="reset" value="Reset" class="btn btn-dark">
                                             </div>
-
-
-
                                         </form>
 
                                     </div>

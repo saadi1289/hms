@@ -61,51 +61,59 @@ Route::middleware(Authenticate::class)->group(function () {
 
         Route::controller(DoctorController::class)->group(function () {
             Route::get('admin/doctors', 'index')->name('admin.doctor');
-            Route::get('admin/doctor/create', 'create')->name('admin.doctor.create');
-            Route::patch('admin/doctor/create', 'store');
-            Route::get('admin/doctor/{doctor}/show', 'show')->name('admin.doctor.show');
-            Route::get('admim/doctor/{doctor}/edit', 'edit')->name('admin.doctor.edit');
-            Route::patch('admin/doctor/{doctor}/details', 'update_details')->name('admin.doctor.details');
-            Route::patch('admin/doctor/{doctor}/picture', 'update_picture')->name('admin.doctor.picture');
-            Route::patch('admin/doctor/{doctor}/password', 'update_password')->name('admin.doctor.password');
-            Route::delete('admin/doctor/{doctor}/destroy', 'destroy')->name('admin.doctor.destroy');
+
+            Route::prefix('admin/doctor/')->name('admin.doctor.')->group(function () {
+                Route::get('create', 'create')->name('create');
+                Route::patch('create', 'store');
+                Route::get('{doctor}/show', 'show')->name('show');
+                Route::get('{doctor}/edit', 'edit')->name('edit');
+                Route::patch('{doctor}/details', 'update_details')->name('details');
+                Route::patch('{doctor}/picture', 'update_picture')->name('picture');
+                Route::patch('{doctor}/password', 'update_password')->name('password');
+                Route::delete('{doctor}/destroy', 'destroy')->name('destroy');
+            });
         });
 
         Route::controller(PatientController::class)->group(function () {
             Route::get('admin/patients', 'index')->name('admin.patient');
-            Route::get('admin/patient/create', 'create')->name('admin.patient.create');
-            Route::patch('admin/patient/create', 'store');
-            Route::get('admin/patient/{patient}/show', 'show')->name('admin.patient.show');
-            Route::get('admim/patient/{patient}/edit', 'edit')->name('admin.patient.edit');
-            Route::patch('admin/patient/{patient}/details', 'update_details')->name('admin.patient.details');
-            Route::patch('admin/patient/{patient}/picture', 'update_picture')->name('admin.patient.picture');
-            Route::patch('admin/patient/{patient}/password', 'update_password')->name('admin.patient.password');
-            Route::delete('admin/patient/{patient}/destroy', 'destroy')->name('admin.patient.destroy');
+
+            Route::prefix('admin/patient/')->name('admin.patient.')->group(function () {
+                Route::get('create', 'create')->name('create');
+                Route::patch('create', 'store');
+                Route::get('{patient}/show', 'show')->name('show');
+                Route::get('{patient}/edit', 'edit')->name('edit');
+                Route::patch('{patient}/details', 'update_details')->name('details');
+                Route::patch('{patient}/picture', 'update_picture')->name('picture');
+                Route::patch('{patient}/password', 'update_password')->name('password');
+                Route::delete('{patient}/destroy', 'destroy')->name('destroy');
+            });
         });
 
         Route::controller(AppointmentController::class)->group(function () {
             Route::get('admin/appointments', 'index')->name('admin.appointments');
-            Route::get('admin/appointment/create', 'create')->name('admin.appointment.create');
-            Route::patch('admin/appointment/create', 'store');
-            Route::get('admin/appointment/{appointment}/show', 'show')->name('admin.appointment.show');
-            Route::get('admin/appointment/{appointment}/edit', 'edit')->name('admin.appointment.edit');
-            Route::patch('admin/appointment/{appointment}/edit', 'update');
-            Route::delete('admin/appointment/{appointment}/destroy', 'destroy')->name('admin.appointment.destroy');
+
+            Route::prefix('admin/appointment/')->name('admin.appointment.')->group(function () {
+                Route::get('create', 'create')->name('create');
+                Route::patch('create', 'store');
+                Route::get('{appointment}/show', 'show')->name('show');
+                Route::get('{appointment}/edit', 'edit')->name('edit');
+                Route::patch('{appointment}/edit', 'update');
+                Route::delete('{appointment}/destroy', 'destroy')->name('destroy');
+            });
         });
     });
 
 
 
-    //////////////////////////////DOCTOR SECTION/////////////////////////////////////////////////////////////////////
-
+                      ///////////////////////////////DOCTOR SECTION///////////////////////////////////
 
     Route::middleware(DoctorAuthenticate::class)->group(function () {
 
-        Route::controller(DoctorProfileController::class)->prefix('profile')->name('profile.')->group(function () {
-            Route::get('doctor/edit', 'edit')->name('doctor.edit');
-            Route::patch('doctor/details', 'update_details')->name('doctor.details');
-            Route::patch('doctor/picture', 'update_picture')->name('doctor.picture');
-            Route::patch('doctor/password', 'update_password')->name('doctor.password');
+        Route::controller(DoctorProfileController::class)->prefix('profile/doctor')->name('profile.doctor.')->group(function () {
+            Route::get('/edit', 'edit')->name('.edit');
+            Route::patch('/details', 'update_details')->name('details');
+            Route::patch('/picture', 'update_picture')->name('picture');
+            Route::patch('/password', 'update_password')->name('password');
         });
 
         Route::controller(DoctorDashboardController::class)->group(function () {
@@ -119,8 +127,10 @@ Route::middleware(Authenticate::class)->group(function () {
 
         Route::controller(DoctorAppointmentController::class)->group(function () {
             Route::get('doctor/appointments', 'index')->name('doctor.appointments');
-            Route::get('doctor/appointment/{appointment}/show', 'show')->name('doctor.appointment.show');
-            Route::get('doctor/appointment/{appointment}/update/{status}', 'updateStatus')->name('doctor.appointment.updateStatus');
+            Route::prefix('doctor/appointment/')->name('doctor.appointment.')->group(function () {
+                Route::get('{appointment}/show', 'show')->name('show');
+                Route::get('{appointment}/update/{status}', 'updateStatus')->name('updateStatus');
+            });
         });
         Route::controller(DoctorCheckupController::class)->group(function () {
             Route::get('doctor/checkup/{appointment}/create', 'create')->name('doctor.checkup.create');
@@ -128,14 +138,16 @@ Route::middleware(Authenticate::class)->group(function () {
         });
     });
 
+                        ///////////////////////////////PATIENT SECTION///////////////////////////////////
+
 
     Route::middleware(PatientAuthenticate::class)->group(function () {
 
-        Route::controller(PatientProfileController::class)->prefix('profile')->name('profile.')->group(function () {
-            Route::get('patient/edit', 'edit')->name('patient.edit');
-            Route::patch('patient/details', 'update_details')->name('patient.details');
-            Route::patch('patient/picture', 'update_picture')->name('patient.picture');
-            Route::patch('patient/password', 'update_password')->name('patient.password');
+        Route::controller(PatientProfileController::class)->prefix('profile/patient')->name('profile.patient.')->group(function () {
+            Route::get('/edit', 'edit')->name('.edit');
+            Route::patch('/details', 'update_details')->name('details');
+            Route::patch('/picture', 'update_picture')->name('picture');
+            Route::patch('/password', 'update_password')->name('password');
         });
 
         Route::controller(PatientDashboardController::class)->group(function () {
@@ -144,12 +156,14 @@ Route::middleware(Authenticate::class)->group(function () {
 
         Route::controller(PatientAppointmentController::class)->group(function () {
             Route::get('patient/appointments', 'index')->name('patient.appointments');
-            Route::get('patient/appointment/create', 'create')->name('patient.appointment.create');
-            Route::patch('patient/appointment/create', 'store');
-            Route::get('patient/appointment/{appointment}/show', 'show')->name('patient.appointment.show');
-            Route::get('patient/appointment/{appointment}/edit', 'edit')->name('patient.appointment.edit');
-            Route::patch('patient/appointment/{appointment}/edit', 'update');
-            Route::delete('patient/appointment/{appointment}/destroy', 'destroy')->name('patient.appointment.destroy');
+            Route::prefix('patient/appointment/')->name('patient.appointment.')->group(function () {
+                Route::get('create', 'create')->name('create');
+                Route::patch('create', 'store');
+                Route::get('{appointment}/show', 'show')->name('show');
+                Route::get('{appointment}/edit', 'edit')->name('edit');
+                Route::patch('{appointment}/edit', 'update');
+                Route::delete('{appointment}/destroy', 'destroy')->name('destroy');
+            });
         });
 
         Route::controller(PatientCheckupController::class)->group(function () {

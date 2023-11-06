@@ -105,13 +105,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="gender" class="form-label">Gender</label>
-                                    <input type="text" class="form-control @error('gender') is-invalid @enderror"
-                                        id="gender" name="gender" placeholder="Enter your gender!"
-                                        value="{{ old('gender') }}">
+                                    <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="male" @if(old('gender') == 'male') selected @endif>Male</option>
+                                        <option value="female" @if(old('gender') == 'female') selected @endif>Female</option>
+                                        <option value="rather_not_say" @if(old('gender') == 'rather_not_say') selected @endif>Rather not say</option>
+                                    </select>
                                     @error('gender')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone_number" class="form-label">Phone Number</label>

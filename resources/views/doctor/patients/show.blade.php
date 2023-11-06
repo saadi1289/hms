@@ -84,15 +84,19 @@
 
                                 {{-- @dump($patient->appointments) --}}
                                 @foreach ($patient->appointments as $appointment)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $appointment->date }}</td>
-                                        <td>{{ $appointment->checkup->symptoms }}</td>
-                                        <td>{{ $appointment->checkup->disease }}</td>
-                                        <td>{{ $appointment->checkup->medications }}</td>
-                                        <td>{{ $appointment->checkup->precautions }}</td>
-                                        <td>{{ $appointment->checkup->tests }}</td>
-                                    </tr>
+                                {{-- @dd($appointment->checkup->symptoms) --}}
+                                @if ($appointment->checkup)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $appointment->date }}</td>
+                                    <td>{{ $appointment->checkup->symptoms }}</td>
+                                    <td>{{ $appointment->checkup->disease }}</td>
+                                    <td>{{ $appointment->checkup->medications }}</td>
+                                    <td>{{ $appointment->checkup->precautions }}</td>
+                                    <td>{{ $appointment->checkup->tests }}</td>
+                                </tr>
+                                
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>

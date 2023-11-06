@@ -97,13 +97,16 @@
 
                                 <div class="mb-3">
                                     <label for="gender" class="form-label">Gender</label>
-                                    <input type="text" class="form-control @error('gender') is-invalid @enderror"
-                                        id="gender" name="gender" placeholder="Enter your gender!"
-                                        value="{{ old('gender') ?? $patient->gender }}">
+                                    <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender">
+                                        <option value="male" {{ (old('gender') == 'male' || $patient->gender == 'male') ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ (old('gender') == 'female' || $patient->gender == 'female') ? 'selected' : '' }}>Female</option>
+                                        <option value="rather_not_say" {{ (old('gender') == 'rather_not_say' || $patient->gender == 'rather_not_say') ? 'selected' : '' }}>Rather Not Say</option>
+                                    </select>
                                     @error('gender')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
 
                                 <div class="mb-3">
                                     <label for="cnic" class="form-label">CNIC</label>

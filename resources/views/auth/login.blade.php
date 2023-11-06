@@ -43,16 +43,11 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-
-
                                             <div class="mb-3">
                                                 <input type="submit" name="submit" value="Submit"
                                                     class="btn btn-primary">
                                                 <input type="reset" value="Reset" class="btn btn-dark">
                                             </div>
-
-
-
                                         </form>
 
                                     </div>

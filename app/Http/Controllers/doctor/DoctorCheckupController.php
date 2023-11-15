@@ -16,6 +16,9 @@ class DoctorCheckupController extends Controller
      */
     public function create(Appointment $appointment)
     {
+        if ($appointment->status === 'Declined' || $appointment->status === 'pending') {
+            return back();
+        }
 
         return view('doctor.checkups.create', [
             'appointment' => $appointment,
@@ -27,9 +30,7 @@ class DoctorCheckupController extends Controller
      */
     public function store(Request $request, Appointment $appointment)
     {
-        if (($appointment->status === 'Declined') || ($appointment->status === 'pending')) {
-            return back()->with(['failure' => 'Cannot create a checkup for a declined appointment']);
-        }
+
         $request->validate([
             'symptoms' => ['required'],
             'disease' => ['required'],
